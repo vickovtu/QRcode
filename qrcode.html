@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Generator QR</title>
+	<script src="jquery.min.js"></script>
+	<script src="qrcode.min.js"></script>
+</head>
+<body>
+	<input id="myinput" placeholder="Type something">
+	<button type="button" onclick="generatorQR()">Generate!</button>
+	<div id="qrcode"></div>
+	<script type="text/javascript">
+		function saveCanvas(canvas) {
+		if (canvas.msToBlob) { // IEblob = canvas.msToBlob();
+			window.navigator.msSaveBlob(blob, 'canvas.png');
+			} else { // CH, FF
+				image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+				window.location.href = image;
+			}
+		}
+
+
+
+		function generatorQR(){
+			console.log("start")
+			var inp = $('#myinput').val();
+			var qr = document.getElementById("qrcode")
+			var qa = document.getElementById("a")
+
+			new QRCode(qr, {
+			text: inp,
+			width: 128,
+    		height: 128,
+    		colorDark : "#000000",
+    		colorLight : "#ffffff",
+    		correctLevel : QRCode.CorrectLevel.H
+			});
+
+			var canvas = document.body.getElementsByTagName("canvas")
+			canvas = canvas[canvas.length - 1]
+			saveCanvas(canvas)
+			var convas = canvas.getContext('2d');
+
+			var base64dataUrl = canvas.toDataURL('img/png')
+			a.setAttribute("href", base64dataUrl)
+			console.log("base64dataUrl", base64dataUrl)
+
+		}
+	</script>
+</body>
+</html>
